@@ -39,8 +39,8 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
 
     m_box_label_idx.add_child( m_label_idx );
     m_label_idx.set_message( std::to_string(idx) );
-}
 
+}
 
 /// Gestion du Vertex avant l'appel à l'interface
 void Vertex::pre_update()
@@ -65,8 +65,6 @@ void Vertex::post_update()
     /// Reprendre la valeur du slider dans la donnée m_value locale
     m_value = m_interface->m_slider_value.get_value();
 }
-
-
 
 /***************************************************
                     EDGE
@@ -102,6 +100,10 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to)
 
 }
 
+void Edge::set_thickness(float epais)
+{
+    m_interface->m_top_edge.set_thickness(epais);
+}
 
 /// Gestion du Edge avant l'appel à l'interface
 void Edge::pre_update()
@@ -148,31 +150,121 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_dim(908,720);
     m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
     m_main_box.set_bg_color(BLANCJAUNE);
+
+    ///Bouton pour revenir au menu
+    m_top_box.add_child(m_button_1);
+    m_button_1.set_dim(35,18);
+    m_button_1.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
+    m_button_1.set_bg_color(makecol(255,0,0));
+
+    m_top_box.add_child(m_button_1_label);
+    m_button_1_label.set_message("MENU");
+    m_button_1_label.set_gravity_x(grman::GravityX::Right);
+    m_button_1_label.set_posy(7);
+
+    ///Bouton pour ajouter un sommet
+    m_top_box.add_child(m_option_1);
+    m_option_1.set_dim(160,18);
+    m_option_1.set_gravity_x(grman::GravityX::Right);
+    m_option_1.set_posy(30);
+    m_option_1.set_bg_color(makecol(175,175,255));
+
+    m_top_box.add_child(m_option1_label);
+    m_option1_label.set_message("Ajouter un sommet");
+    m_option1_label.set_gravity_x(grman::GravityX::Right);
+    m_option1_label.set_posy(37);
+
+    ///Bouton pour ajouter une arète
+    m_top_box.add_child(m_option_2);
+    m_option_2.set_dim(160,18);
+    m_option_2.set_gravity_x(grman::GravityX::Right);
+    m_option_2.set_posy(55);
+    m_option_2.set_bg_color(makecol(175,175,255));
+
+    m_top_box.add_child(m_option2_label);
+    m_option2_label.set_message("Ajouter une arete");
+    m_option2_label.set_gravity_x(grman::GravityX::Right);
+    m_option2_label.set_posy(62);
+
+    ///Bouton pour supprimer un sommet
+    m_top_box.add_child(m_option_3);
+    m_option_3.set_dim(160,18);
+    m_option_3.set_gravity_x(grman::GravityX::Right);
+    m_option_3.set_posy(80);
+    m_option_3.set_bg_color(makecol(175,175,255));
+
+    m_top_box.add_child(m_option3_label);
+    m_option3_label.set_message("Supprimer un sommet");
+    m_option3_label.set_gravity_x(grman::GravityX::Right);
+    m_option3_label.set_posy(87);
+
+    ///Bouton pour supprimer une arète
+    m_top_box.add_child(m_option_4);
+    m_option_4.set_dim(160,18);
+    m_option_4.set_gravity_x(grman::GravityX::Right);
+    m_option_4.set_posy(105);
+    m_option_4.set_bg_color(makecol(175,175,255));
+
+    m_top_box.add_child(m_option4_label);
+    m_option4_label.set_message("Supprimer une arete");
+    m_option4_label.set_gravity_x(grman::GravityX::Right);
+    m_option4_label.set_posy(112);
+
+
+//    ///Bouton pour accéder au graphe 1
+//    m_top_box.add_child(m_graph_1);
+//    m_graph_1.set_frame(400, 200, 32, 10);
+//    m_graph_1.set_gravity_x(grman::GravityX::Center);
+//    m_graph_1.set_bg_color(BLANC);
+//
+//    m_top_box.add_child(m_graph1_label);
+//    m_graph1_label.set_frame(400, 200, 32, 10);
+//    m_graph1_label.set_message("Reseau Trophique 1");
+//    m_graph1_label.set_gravity_x(grman::GravityX::Center);
 }
 
-void Graph::ajouter_sommet()
+std::string Graph::accueil(BITMAP* fond_menu)
+{
+    std::string nom="";
+    blit(fond_menu,grman::page, 0,0,0,0,SCREEN_W, SCREEN_H);
+    blit(grman::page, screen, 0,0,0,0,SCREEN_W, SCREEN_H);
+
+
+
+    destroy_bitmap(fond_menu);
+
+    return nom;
+}
+
+void Graph::ajouter_sommet(int chaine)
 {
     bool bibli=false;
     int choix=0;
     Sommet s;
-
-    if((mouse_b&1) && ((mouse_x>=500 && mouse_x<=800) && (mouse_y>=25 && mouse_y<=49)))
+    if((mouse_b&1) && ((mouse_x>=640 && mouse_x<=800) && (mouse_y>=30 && mouse_y<=48)))
     {
         bibli=true;
     }
 
     if(bibli)
     {
-        std::cout << 1;
-        choix=grman::biblio();
-        std::cout << std::endl << "AAA" << choix << "bb";
+        choix=grman::biblio(chaine);
+
+        for(std::map<int,Vertex>::iterator it=m_vertices.begin(); it!=m_vertices.end(); ++it)
+        {
+            if(choix==it->first+1)
+            {
+                std::cout << "\nAjout impossible. Le sommet que vous desirez ajouter existe deja.\n\n";
+                choix=0;
+            }
+        }
 
         if(choix==1)
         {
             s.m_coordx=mouse_x;
             s.m_coordy=mouse_y;
             s.m_nom_img="0.jpg";
-            s.m_num=m_ordre;
+            s.m_num=0;
 
             m_vect_sommets.push_back(s);
             m_ordre+=1;
@@ -184,7 +276,7 @@ void Graph::ajouter_sommet()
             s.m_coordx=mouse_x;
             s.m_coordy=mouse_y;
             s.m_nom_img="1.jpg";
-            s.m_num=m_ordre;
+            s.m_num=1;
 
             m_vect_sommets.push_back(s);
             m_ordre+=1;
@@ -196,7 +288,7 @@ void Graph::ajouter_sommet()
             s.m_coordx=mouse_x;
             s.m_coordy=mouse_y;
             s.m_nom_img="2.jpg";
-            s.m_num=m_ordre;
+            s.m_num=2;
 
             m_vect_sommets.push_back(s);
             m_ordre+=1;
@@ -208,15 +300,61 @@ void Graph::ajouter_sommet()
             s.m_coordx=mouse_x;
             s.m_coordy=mouse_y;
             s.m_nom_img="3.jpg";
-            s.m_num=m_ordre;
+            s.m_num=3;
 
             m_vect_sommets.push_back(s);
             m_ordre+=1;
 
             add_interfaced_vertex(m_vect_sommets[m_ordre-1].m_num, m_vect_sommets[m_ordre-1].m_taille_pop, m_vect_sommets[m_ordre-1].m_coordx, m_vect_sommets[m_ordre-1].m_coordy, m_vect_sommets[m_ordre-1].m_nom_img);
         }
+        else if(choix==5)
+        {
+            s.m_coordx=mouse_x;
+            s.m_coordy=mouse_y;
+            s.m_nom_img="4.jpg";
+            s.m_num=4;
 
-        std::cout << m_vect_sommets[m_ordre-1].m_num << " " << m_vect_sommets[m_ordre-1].m_coordx << " " << m_vect_sommets[m_ordre-1].m_coordy << " ajout\n";
+            m_vect_sommets.push_back(s);
+            m_ordre+=1;
+
+            add_interfaced_vertex(m_vect_sommets[m_ordre-1].m_num, m_vect_sommets[m_ordre-1].m_taille_pop, m_vect_sommets[m_ordre-1].m_coordx, m_vect_sommets[m_ordre-1].m_coordy, m_vect_sommets[m_ordre-1].m_nom_img);
+        }
+        else if(choix==6)
+        {
+            s.m_coordx=mouse_x;
+            s.m_coordy=mouse_y;
+            s.m_nom_img="5.jpg";
+            s.m_num=5;
+
+            m_vect_sommets.push_back(s);
+            m_ordre+=1;
+
+            add_interfaced_vertex(m_vect_sommets[m_ordre-1].m_num, m_vect_sommets[m_ordre-1].m_taille_pop, m_vect_sommets[m_ordre-1].m_coordx, m_vect_sommets[m_ordre-1].m_coordy, m_vect_sommets[m_ordre-1].m_nom_img);
+        }
+        else if(choix==7)
+        {
+            s.m_coordx=mouse_x;
+            s.m_coordy=mouse_y;
+            s.m_nom_img="6.jpg";
+            s.m_num=6;
+
+            m_vect_sommets.push_back(s);
+            m_ordre+=1;
+
+            add_interfaced_vertex(m_vect_sommets[m_ordre-1].m_num, m_vect_sommets[m_ordre-1].m_taille_pop, m_vect_sommets[m_ordre-1].m_coordx, m_vect_sommets[m_ordre-1].m_coordy, m_vect_sommets[m_ordre-1].m_nom_img);
+        }
+        else if(choix==8)
+        {
+            s.m_coordx=mouse_x;
+            s.m_coordy=mouse_y;
+            s.m_nom_img="7.jpg";
+            s.m_num=7;
+
+            m_vect_sommets.push_back(s);
+            m_ordre+=1;
+
+            add_interfaced_vertex(m_vect_sommets[m_ordre-1].m_num, m_vect_sommets[m_ordre-1].m_taille_pop, m_vect_sommets[m_ordre-1].m_coordx, m_vect_sommets[m_ordre-1].m_coordy, m_vect_sommets[m_ordre-1].m_nom_img);
+        }
     }
 }
 
@@ -227,14 +365,29 @@ void Graph::enregistrer_donnees_som(std::string nom_fic_som)
 
     if(fichier)
     {
-        fichier << m_ordre << std::endl;
+        fichier << m_vertices.size() << std::endl;
 
         for(std::map<int, Vertex>::iterator it=m_vertices.begin(); it!=m_vertices.end(); it++)
         {
             fichier << it->first << " ";
             fichier << it->second.m_value << " ";
-            fichier << it->second.m_interface->m_top_box.get_posx() << " ";
-            fichier << it->second.m_interface->m_top_box.get_posy() << " ";
+
+            if(it->second.m_interface->m_top_box.get_posx()<=0)
+            {
+                it->second.m_interface->m_top_box.set_posx(0);
+                fichier << it->second.m_interface->m_top_box.get_posx() << " ";
+            }
+            else
+                fichier << it->second.m_interface->m_top_box.get_posx() << " ";
+
+            if(it->second.m_interface->m_top_box.get_posy()<=0)
+            {
+                it->second.m_interface->m_top_box.set_posy(0);
+                fichier << it->second.m_interface->m_top_box.get_posy() << " ";
+            }
+            else
+                fichier << it->second.m_interface->m_top_box.get_posy() << " ";
+
             fichier << it->second.m_interface->m_img.m_pic_name << std::endl;
         }
         fichier.close();
@@ -252,6 +405,7 @@ void Graph::recup_donnees_som(std::string nom_fic_som)
     {
         fichier >> m_ordre;
 
+        std::cout << m_ordre <<" ";
         for(int i=0; i<m_ordre; ++i)
         {
             fichier >> s.m_num;
@@ -273,9 +427,10 @@ void Graph::enregistrer_donnees_ar(std::string nom_fic_ar)
 {
     std::ofstream fichier(nom_fic_ar, std::ios::in);
 
+    std::cout << 3;
     if(fichier)
     {
-        fichier << m_nb_aretes << std::endl;
+        fichier << m_edges.size() << std::endl;
 
         for(std::map<int, Edge>::iterator it=m_edges.begin(); it!=m_edges.end(); it++)
         {
@@ -286,6 +441,7 @@ void Graph::enregistrer_donnees_ar(std::string nom_fic_ar)
         }
         fichier.close();
     }
+    std::cout << 4;
 }
 
 ///Récupérer dans le fichier relations
@@ -312,7 +468,6 @@ void Graph::recup_donnees_ar(std::string nom_fic_ar)
         fichier.close();
     }
 }
-
 
 /// Méthode spéciale qui construit un graphe arbitraire (démo)
 /// Cette méthode est à enlever et remplacer par un système
@@ -345,8 +500,11 @@ void Graph::make_example(std::string nom_fic_som, std::string nom_fic_ar)
 }
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update()
+void Graph::update(int *chaine)
 {
+    if(m_interface->m_button_1.clicked())
+        *chaine=4;
+
     if (!m_interface)
         return;
 
@@ -364,6 +522,7 @@ void Graph::update()
     for (auto &elt : m_edges)
         elt.second.post_update();
 
+    this->set_thickness();
 }
 
 /// Aide à l'ajout de sommets interfacés
@@ -421,7 +580,7 @@ void Graph::afficher_aretes()
 void Graph::ajouter_arete(bool *finn, bool *finn2, bool *gauche, int *cptt, int *s1, int *s2)
 {
     /// si il clique sur ajouter un sommet
-    if((mouse_b&1) && ((mouse_x>=500 && mouse_x<=800) && (mouse_y>=49 && mouse_y<=66)) && !(*finn))
+    if(m_interface->m_option_2.clicked())
     {
         *finn=true;
         *cptt=1;
@@ -501,188 +660,114 @@ void Graph::ajouter_arete(bool *finn, bool *finn2, bool *gauche, int *cptt, int 
             *s1=13;
             *s2=13;
         }
+        *cptt=0;
     }
 }
 
-
-///Fonction pour supprimer une arete
-void Graph::supp_arete(bool *fin_inna1, int *cpt_inna, int *s)
-{
-
-    Edge arete_supp;
-    std::map<int,Edge>::iterator it;
-    std::map<int,Edge>::iterator it1;
-    bool etape_suiv=false;
-    bool *p_etape_suiv;
-    p_etape_suiv= &etape_suiv;
-
-
-    bool etape_suiv1=false;
-    bool *p_etape_suiv1;
-    p_etape_suiv1=&etape_suiv1;
-    bool commenceSnd=false;
-
-    int s2;
-
-    bool click=false;
-    int v=0;
-
-
-    ///Si on clique dans le menu sur supprimer une arete
-    if(mouse_b&1 && mouse_x>=500 && mouse_x<=800 && mouse_y>=70 && mouse_y<=100 && !(*fin_inna1))
-    {
-        *fin_inna1=true;
-        *cpt_inna=1;
-        std::cout<<"Cliquer sur le sommet d'ou part l'arete"<<std::endl;
-    }
-
-    else if( mouse_b&1 && mouse_x>=0 && mouse_x<=800 && mouse_y>=0 && mouse_y<=600 && (*fin_inna1) && (*cpt_inna>=50))
-    {
-        std::cout<<"on clique gauche"<<std::endl;
-        int  mousepos_x=mouse_x;
-        int  mousepos_y=mouse_y;
-
-        for (std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it)
-        {
-            std::cout<<"On regarde si il y a un sommet correspondant"<<std::endl;
-
-            if ( mousepos_y >=  it->second.m_interface->m_top_box.get_posy() && mousepos_y <=it->second.m_interface->m_top_box.get_posy()  + 100 &&mousepos_x>=it->second.m_interface->m_top_box.get_posx() -80 && mousepos_x <= it->second.m_interface->m_top_box.get_posx()  +20)
-            {
-                *s=it->first;
-                std::cout<<"on a trouve s1"<<*s<<std::endl;
-
-            }
-            *p_etape_suiv=true;
-        }
-
-        std::cout<<"Tres bien, veuillez maintenant cliquer sur le sommet d'arrivee de l'arete"<<std::endl;
-
-        while (!commenceSnd && (*p_etape_suiv))
-        {
-            if(mouse_b&2 )
-            {
-                commenceSnd=true;
-
-
-
-                for ( std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it )
-                {
-
-                    if ( mousepos_y >=  it->second.m_interface->m_top_box.get_posy() && mousepos_y <=it->second.m_interface->m_top_box.get_posy()  + 100 &&mousepos_x>=it->second.m_interface->m_top_box.get_posx() -80 && mousepos_x <= it->second.m_interface->m_top_box.get_posx()  +20)
-                    {
-
-                        s2=it->first;
-                        std::cout<<"on a trouve s2"<<s2<<std::endl;
-                        *p_etape_suiv1=true;
-                    }
-                }
-            }
-        }
-
-        if(*p_etape_suiv1==true && *p_etape_suiv==true)
-        {
-
-
-            for (std::map<int, Edge> :: iterator it=m_edges.begin(); it!=m_edges.end(); ++it)
-            {
-
-                if( (it->second.m_from==*s || it->second.m_to==*s)  && ( it->second.m_from==s2 || it->second.m_to==s2) )
-                {
-
-                    ///On delete l'arete
-
-
-                    m_edges.erase(it->first);
-                    m_nb_aretes -=1;
-                    arete_supp=it->second;
-                    std::cout <<"Arete supprime"<<std::endl;
-                }
-
-            }
-
-
-         ar_incidentes(&click, &v, s, &s2);
-
-
-            for (std::vector<int> :: iterator it=m_vertices[*s].m_in.begin(); it!=m_vertices[*s].m_in.end(); ++it)
-            {
-              std::cout<<"essai 1"<<std::endl;
-                if (arete_supp.m_from==*it || arete_supp.m_to==*it)
-                {
-                    std::cout<<"size in " <<m_vertices[*s].m_in.size();
-                    std::cout<<"size in " <<m_vertices[*s].m_out.size();
-                    std::cout<<"essai 2"<<std::endl;
-                    m_vertices[*s].m_in.erase(it);
-                    std::cout<<"essai 3"<<std::endl;
-                }
-
-            }
-            for (std::vector<int> :: iterator it=m_vertices[*s].m_out.begin(); it!=m_vertices[*s].m_out.end(); ++it)
-            {
-                if (arete_supp.m_from==*it || arete_supp.m_to==*it)
-                {
-                    m_vertices[*s].m_out.erase(it);
-                }
-            }
-
-            for (std::vector<int> :: iterator it=m_vertices[s2].m_in.begin(); it!=m_vertices[s2].m_in.end(); ++it)
-            {
-                if (arete_supp.m_from==*it || arete_supp.m_to==*it)
-                {
-                    m_vertices[s2].m_in.erase(it);
-                }
-
-            }
-            for (std::vector<int> :: iterator it=m_vertices[s2].m_out.begin(); it!=m_vertices[s2].m_out.end(); ++it)
-            {
-                if (arete_supp.m_from==*it || arete_supp.m_to==*it)
-                {
-                    m_vertices[s2].m_out.erase(it);
-                }
-            }
-
-
-        }
-        *cpt_inna=0;
-    *fin_inna1=false;
-
-    }
-
-
-
-}
-
-
-
+///Méthode de suppression d'un sommet
 void Graph::supprimer_sommet(bool *fin1, int *cptt)
 {
+     std::vector<int> sup;
     /// si il clique sur ajouter un sommet
-    if((mouse_b&1) && ((mouse_x>=500 && mouse_x<=800) && (mouse_y>=70 && mouse_y<=100)) && !(*fin1))
+    if(m_interface->m_option_3.clicked())
     {
         *fin1=true;
         *cptt=1;
-        std::cout << "Choisissez le sommet a supprimer." <<std::endl;
+        std::cout << "Choisissez le sommet a supprimer." << std::endl;
     }
 
     /// si il clique GAUCHE et dans l'ecran sur un sommet
-    else if((mouse_b&1) && ((mouse_x>=0 && mouse_x<=800) && (mouse_y>=0 && mouse_y<=600)) && *fin1 && *cptt>=50)
+    else if((mouse_b&1) && ((mouse_x>=0 && mouse_x<=800) && (mouse_y>=0 && mouse_y<=600)) && *fin1 && *cptt>=30)
     {
-        ///on recupère les coordonnées de la ou on a clique
+        ///on recupère les coordonnées de là où on a clique
         double mouseposx = mouse_x;
         double mouseposy = mouse_y;
 
         for (std::map<int, Vertex>::iterator it=m_vertices.begin(); it!=m_vertices.end(); it++)
         {
+            sup.clear();
             if (mouseposy >=it->second.m_interface->m_top_box.get_posy() && mouseposy <=it->second.m_interface->m_top_box.get_posy() + 100 && mouseposx>=it->second.m_interface->m_top_box.get_posx()-80 && mouseposx <= it->second.m_interface->m_top_box.get_posx() +20 )
             {
+                for (std::map<int, Edge>::iterator it2=m_edges.begin(); it2!=m_edges.end(); it2++)
+                {
+                    if (it2->second.m_from==it->first || it2->second.m_to==it->first)
+                    {
+                        sup.push_back(it2->first);
+                        m_nb_aretes-=1;
+                        *fin1=false;
+                        *cptt=0;
+                    }
+                }
+
+                if(sup.size()!=0)
+                {
+                    for(unsigned int i=0; i<sup.size(); ++i)
+                    {
+                        m_nb_aretes-=1;
+                        test_remove_edge(sup[i]);
+                    }
+                }
+
+
                 /// si il clique sur un sommet
                 m_interface->m_main_box.remove_child(m_vertices[it->first].m_interface->m_top_box);
                 m_vertices.erase(it);
-                m_ordre-=1;
-                *fin1=false;
+                return;
             }
         }
+        *cptt=0;
     }
+}
+
+void Graph::test_remove_edge(int eidx)
+{
+/// référence vers le Edge à enlever
+    Edge &remed=m_edges.at(eidx);
+
+///Affichage
+//    std::cout << 2 << m_vertices.size() << std::endl;
+//
+//    std::cout << "Removing edge " << eidx << " " << remed.m_from << "->" << remed.m_to << " " << remed.m_weight << std::endl;
+//
+///// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
+//    std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
+//    std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
+//    std::cout << m_edges.size() << std::endl;
+//
+//    std::cout << 3 << m_vertices.size() << std::endl;
+
+/// test : on a bien des éléments interfacés
+    if (m_interface && remed.m_interface)
+    {
+/// Ne pas oublier qu'on a fait ça à l'ajout de l'arc :
+        /* EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]); */
+        /* m_interface->m_main_box.add_child(ei->m_top_edge); */
+        /* m_edges[idx] = Edge(weight, ei); */
+/// Le new EdgeInterface ne nécessite pas de delete car on a un shared_ptr
+/// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+/// mais il faut bien enlever le conteneur d'interface m_top_edge de l'arc de la main_box du graphe
+        m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+
+//        std::cout << 4 << m_vertices.size() << std::endl;
+    }
+
+/// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
+/// References sur les listes de edges des sommets from et to
+    std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
+    std::vector<int> &veto = m_vertices[remed.m_to].m_in;
+    vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
+    veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
+//    std::cout << 5 << m_vertices.size() << std::endl;
+
+/// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
+/// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
+/// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
+    m_edges.erase( eidx );
+
+/// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
+//    std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
+//    std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
+//    std::cout << m_vertices.size() << std::endl;
 }
 
 void Graph::ar_incidentes(bool *click, int *v, int *s, int *s2)
@@ -698,7 +783,6 @@ void Graph::ar_incidentes(bool *click, int *v, int *s, int *s2)
 
             /// si il clique sur un sommet
             if ( mouseposy >=  it->second.m_interface->m_top_box.get_posy() && mouseposy <=it->second.m_interface->m_top_box.get_posy()  + 100 &&mouseposx>=it->second.m_interface->m_top_box.get_posx() -80 && mouseposx <= it->second.m_interface->m_top_box.get_posx()  +20 )
-
             {
                 *v=it->first;
                 std::cout << "sommet : "<<*v;
@@ -729,55 +813,633 @@ void Graph::ar_incidentes(bool *click, int *v, int *s, int *s2)
 
         *click =false;
         ///affichage des vecteurs in et out
-       /* for (unsigned int i =0; i<m_vertices[*v].m_in.size(); ++i)
-        {
-            std :: cout << "in " << it_sommet->second.m_in[i]<< std::endl;
+        /* for (unsigned int i =0; i<m_vertices[*v].m_in.size(); ++i)
+         {
+             std :: cout << "in " << it_sommet->second.m_in[i]<< std::endl;
 
-        }
+         }
 
-        for (unsigned int i=0; i<m_vertices[*v].m_out.size(); ++i)
-        {
-            std :: cout << "out " << it_sommet->second.m_out[i]<< std::endl;
+         for (unsigned int i=0; i<m_vertices[*v].m_out.size(); ++i)
+         {
+             std :: cout << "out " << it_sommet->second.m_out[i]<< std::endl;
 
-        }*/
+         }*/
 
     }
 }
 
+///Fonction pour supprimer une arete
+void Graph::supp_arete(bool *fin_inna1, int *cpt_inna, int *s)
+{
+    Edge arete_supp;
+    std::map<int,Edge>::iterator it1;
+    bool etape_suiv=false;
+    bool *p_etape_suiv;
+    p_etape_suiv= &etape_suiv;
 
-void Graph::test_remove_edge( int eidx)
-{
-/// référence vers le Edge à enlever
-Edge &remed=m_edges.at(eidx);
-std::cout << "Removing edge " << eidx << " " << remed.m_from << "->" << remed.m_to << " " << remed.m_weight << std::endl;
-/// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
-std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
-std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
-std::cout << m_edges.size() << std::endl;
-/// test : on a bien des éléments interfacés
-if (m_interface && remed.m_interface)
-{
-/// Ne pas oublier qu'on a fait ça à l'ajout de l'arc :
-/* EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]); */
-/* m_interface->m_main_box.add_child(ei->m_top_edge); */
-/* m_edges[idx] = Edge(weight, ei); */
-/// Le new EdgeInterface ne nécessite pas de delete car on a un shared_ptr
-/// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
-/// mais il faut bien enlever le conteneur d'interface m_top_edge de l'arc de la main_box du graphe
-m_interface->m_main_box.remove_child( remed.m_interface->m_top_edge );
+    bool etape_suiv1=false;
+    bool *p_etape_suiv1;
+    p_etape_suiv1=&etape_suiv1;
+    bool commenceSnd=false;
+
+    int s2=0;
+
+    ///Si on clique dans le menu sur supprimer une arete
+    if(m_interface->m_option_4.clicked() && !(*fin_inna1))
+    {
+        *fin_inna1=true;
+        *cpt_inna=1;
+        std::cout<<"Cliquer sur le sommet d'ou part l'arete"<<std::endl;
+
+        for (std::map<int, Edge>::iterator it = m_edges.begin(); it!=m_edges.end(); ++it)
+        {
+            std::cout << it->first << " " << it->second.m_from << " " << it->second.m_to << std::endl;
+        }
+    }
+
+    else if( mouse_b&1 && mouse_x>=0 && mouse_x<=800 && mouse_y>=0 && mouse_y<=600 && (*fin_inna1) && (*cpt_inna>=50))
+    {
+        std::cout<<"on clique gauche"<<std::endl;
+        int  mousepos_x=mouse_x;
+        int  mousepos_y=mouse_y;
+
+        for (std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it)
+        {
+            std::cout << "On regarde si il y a un sommet correspondant" <<std::endl;
+
+            if ( mousepos_y >=  it->second.m_interface->m_top_box.get_posy() && mousepos_y <=it->second.m_interface->m_top_box.get_posy()  + 100 &&mousepos_x>=it->second.m_interface->m_top_box.get_posx() -80 && mousepos_x <= it->second.m_interface->m_top_box.get_posx()  +20)
+            {
+                *s=it->first;
+                std::cout<<"on a trouve s1 "<<*s<<std::endl;
+            }
+            *p_etape_suiv=true;
+        }
+
+        std::cout<<"Tres bien, veuillez maintenant cliquer sur le sommet d'arrivee de l'arete"<<std::endl;
+
+        while (!commenceSnd && (*p_etape_suiv))
+        {
+            if(mouse_b&2 )
+            {
+                int  mousepos_x=mouse_x;
+                int  mousepos_y=mouse_y;
+
+                commenceSnd=true;
+
+                for ( std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it )
+                {
+                    if ( mousepos_y >=  it->second.m_interface->m_top_box.get_posy() && mousepos_y <=it->second.m_interface->m_top_box.get_posy()  + 100 &&mousepos_x>=it->second.m_interface->m_top_box.get_posx() -80 && mousepos_x <= it->second.m_interface->m_top_box.get_posx()  +20)
+                    {
+                        s2=it->first;
+                        std::cout<<"on a trouve s2 "<<s2<<std::endl;
+                        *p_etape_suiv1=true;
+                    }
+                }
+            }
+        }
+
+        for(std::map<int, Vertex>::iterator it=m_vertices.begin(); it!=m_vertices.end(); it++)
+        {
+            if(it->first==*s)
+            {
+                std::cout << "\nPosX avant: " << it->second.m_interface->m_top_box.get_posx() << "\nPosY avant: " << it->second.m_interface->m_top_box.get_posy();
+            }
+        }
+
+        if(*p_etape_suiv1==true && *p_etape_suiv==true)
+        {
+            for (std::map<int, Edge>::iterator it=m_edges.begin(); it!=m_edges.end(); it++)
+            {
+                if ((it->second.m_from==*s && it->second.m_to==s2) || (it->second.m_from==s2 && it->second.m_to==*s))
+                {
+                    test_remove_edge(it->first);
+                    *fin_inna1=false;
+                    *cpt_inna=0;
+                    *p_etape_suiv=false;
+                    *p_etape_suiv1=false;
+
+                    return;
+                }
+            }
+        }
+    }
 }
-/// Il reste encore à virer l'arc supprimé de la liste des entrants et sortants des 2 sommets to et from !
-/// References sur les listes de edges des sommets from et to
-std::vector<int> &vefrom = m_vertices[remed.m_from].m_out;
-std::vector<int> &veto = m_vertices[remed.m_to].m_in;
-vefrom.erase( std::remove( vefrom.begin(), vefrom.end(), eidx ), vefrom.end() );
-veto.erase( std::remove( veto.begin(), veto.end(), eidx ), veto.end() );
-/// Le Edge ne nécessite pas non plus de delete car on n'a pas fait de new (sémantique par valeur)
-/// Il suffit donc de supprimer l'entrée de la map pour supprimer à la fois l'Edge et le EdgeInterface
-/// mais malheureusement ceci n'enlevait pas automatiquement l'interface top_edge en tant que child de main_box !
-m_edges.erase( eidx );
-/// Tester la cohérence : nombre d'arc entrants et sortants des sommets 1 et 2
-std::cout << m_vertices[remed.m_from].m_in.size() << " " << m_vertices[remed.m_from].m_out.size() << std::endl;
-std::cout << m_vertices[remed.m_to].m_in.size() << " " << m_vertices[remed.m_to].m_out.size() << std::endl;
-std::cout << m_edges.size() << std::endl;
+
+void Graph::set_thickness()
+{
+    for(auto& elem : m_edges)
+    {
+        elem.second.set_thickness(elem.second.m_weight);
+    }
 }
+
+void Graph::evolution_pop(bool *ev)
+{
+    double K=0, Nt=0, r=0.00000005, Nt1=0, Nt2=0;
+    int s=0, cpttemp=0;
+    std::map<int, Vertex> :: iterator temp;
+
+    if(key[KEY_C])
+    {
+        *ev=true;
+        std::cout << "salut";
+    }
+    if(key[KEY_S])
+    {
+        *ev=false;
+    }
+
+    if(*ev)
+    {
+        ///Calcul du K
+        for(std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it)
+        {
+            K=0;
+            Nt=0;
+            Nt1=0;
+            cpttemp=0;
+
+            ///Boucle de parcours du vecteur d'arètes
+            for(std::map<int, Edge>::iterator it2 = m_edges.begin(); it2!=m_edges.end(); ++it2)
+            {
+                ///Si le prédateur de l'arète est le sommet actuel
+                if(it->first==it2->second.m_to)
+                {
+                    cpttemp++;
+                    s=it2->second.m_from;
+                    temp=m_vertices.find(s);
+                    std::cout << "temp" << temp->first << " " << K << std::endl;
+                    K+=temp->second.m_value*((it2->second.m_weight)/100);
+                    std::cout << "K " << K << " ";
+                }
+            }
+            if(K==0 && cpttemp==0)
+            {
+                std::cout << it->first << "HHHHHHHHHH";
+                K=100;
+            }
+            else if(K==0 && cpttemp!=0)
+            {
+                K=0.1;
+            }
+
+            Nt=it->second.m_value;
+            std::cout << "\nNt: " << Nt;
+            std::cout << "\nK: " << K << std::endl;
+            int i=(r*Nt*(1-(Nt/K)));
+
+            std::cout << "\nFormule: " << i << std::endl;
+            std::cout << "\nNt1: " << Nt1 << std::endl;
+
+            for(std::map<int, Edge>::iterator it2 = m_edges.begin(); it2!=m_edges.end(); ++it2)
+            {
+                if(it->first==it2->second.m_from)
+                {
+                    s=it2->second.m_to;
+                    temp=m_vertices.find(s);
+                    Nt2-=temp->second.m_value*(it2->second.m_weight/100);
+                }
+            }
+
+            std::cout << "Nt2: " << Nt2 << std::endl;
+
+            Nt1=Nt+i+Nt2;
+            std::cout << "\nNt1: " << Nt1 << std::endl;
+
+            if(Nt1>=100)
+                Nt1=100;
+            if(Nt1<=0)
+                Nt1=0;
+
+            std::cout << "\nNt1: " << Nt1<< std::endl;
+            it->second.m_value=Nt1;
+        }
+    }
+}
+void Graph :: matrice_adj()
+{
+    int a=0;
+    int b=0;
+    double poids=0;
+    std::vector<int> matrice_temp;
+    std::map<int, Edge>::iterator it;
+
+    for (int i=0; i<m_ordre; i++)
+    {
+        for (int j=0; j<m_ordre; j++)
+        {
+            matrice_temp.push_back(0);
+        }
+        m_matrice_adj.push_back(matrice_temp);
+    }
+
+    for (std::map<int,Edge>::iterator it2=m_edges.begin(); it2!=m_edges.end(); ++it2)
+    {
+        it= m_edges.find(it2->first);
+        a=it->second.m_from;
+
+        b=it->second.m_to;
+
+        poids=it->second.m_weight;
+
+        m_matrice_adj[a][b]=poids;
+
+    }
+
+
+    for (int n=0; n<m_ordre; n++)
+    {
+        for (int m=0; m<m_ordre; m++)
+        {
+            if (n==m)
+                m_matrice_adj[n][m]=1;
+        }
+    }
+
+}
+
+std::vector <int> Graph::une_compo_fortement_connexes(int s)
+{
+
+    ///Fonction qui retournent un tab dynamique de booléens indiquant si les sommets forment ou non un circuit
+    ///(composante fortement connexe) en passant par un sommet s
+
+    matrice_adj();
+
+
+///Definition variables locales
+    std::vector <int> c1; ///Composantes connexes directes partant de s
+    std::vector <int> c2; ///indirectes arrivant vers s
+    std::vector <int> c; ///composante fortement connexe = c1 inter c2 à retourner
+    int x, y; ///numeros de sommets intermédiaires des composantes connexes
+    int ajoute = 1; ///booléen indiquant si une nouvelle composante connexe est ajoutée
+
+///Initialisation à false des marqueurs de sommets
+    for (std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it)
+    {
+        it->second.m_marque=false;
+
+    }
+///C1 vecteur qui dit si sommet s connexe avec le sommet indice i
+    for (int i=0; i<m_ordre; i++)
+    {
+        c1.push_back(0);
+    }
+
+///Rendre le sommet s connexe
+    c1[s]=1 ;
+
+///Recherche des composantes connexes partant de s à ajouter dans c1
+    std::map<int,Vertex>::iterator itx;
+    std::map<int,Vertex>::iterator ity;
+
+///Tant qu'on ajoute encore des sommets dans notre composante
+    while (ajoute==1)
+    {
+        ajoute=0; /// à chaque tour, recherche d'une nouvelle composante connexe à ajouter
+///Pour tous les sommets x non marques et connectes en partant de s
+///Marquer chaque sommet x et connecter les sommets non marqués y adjacents à x
+
+///Parcourons nos sommets une premiere fois
+        for (x=0; x<m_ordre; x++)
+        {
+
+            itx= m_vertices.find(x);
+///Si ce sommet n'est pas marque et qu'il est connecte a notre sommet de départ (si c'est la premiere fois qu'on rentre dans la boucle y a que 0 qui passe)
+            if ( itx->second.m_marque==false && c1[itx->first]==1)
+            {
+                ///On marque le sommet
+                itx->second.m_marque=true;
+
+                ///On parcourt une seconde fois nos sommets
+                for (y=0; y<m_ordre; y++)
+                {
+
+                    ity=m_vertices.find(y);
+
+                    ///Si ces deux sommets sont connectes et que le 2e sommets n'est pas marqué non plus (donc pour 0 on doit trouver tous ses voisins)
+                    if (m_matrice_adj[x][y]!=0 && ity->second.m_marque==false )
+                    {
+                        ///On dit que le deuxieme sommet est connexe avec le sommet s
+                        c1[y]=1;
+                        ajoute=1; ///Nouvelle composante connexe ajoutee
+                    }
+
+                }
+
+            }
+
+        }
+
+    } ///Fin du while
+
+///Recherche des composantes connexes connexes arrivant à s à ajouter dans c2
+    for (std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it)
+    {
+        it->second.m_marque=false;
+    }
+
+    for (int i=0; i<m_ordre; i++)
+    {
+        c2.push_back(0);
+    }
+    std::vector<std::vector<int> > trans;
+    std::vector<int> matrice_temp1;
+    for (int i=0; i<m_ordre; i++)
+    {
+        for (int j=0; j<m_ordre; j++)
+        {
+            matrice_temp1.push_back(0);
+        }
+        trans.push_back(matrice_temp1);
+    }
+
+
+
+    for (int a=0; a<m_ordre; a++)
+    {
+        for (int b=0; b<m_ordre; b++)
+        {
+            trans[a][b]=m_matrice_adj[b][a];
+        }
+    }
+
+
+///Rendre le sommet s connexe
+    c2[s]=1;
+    ajoute=1;
+    while (ajoute==1)
+    {
+        ajoute=0; /// à chaque tour, recherche d'une nouvelle composante connexe à ajouter
+        ///Pour tous les sommets x non marques et connectes en partant de s
+
+        for (x=0; x<m_ordre; x++)
+        {
+
+            itx= m_vertices.find(x);
+
+            if ( itx->second.m_marque==false && c2[itx->first]==1)
+            {
+                itx->second.m_marque=true;
+                for (y=0; y<m_ordre; y++)
+                {
+                    ity=m_vertices.find(y);
+                    if (trans[x][y]!=0 && ity->second.m_marque==false )
+                    {
+                        c2[y]=1;
+                        ajoute=1; ///Nouvelle composante connexe ajoutee
+                    }
+                }
+
+            }
+        }
+
+    }
+
+///C vecteur qui dit si sommet s fortement connexe avec le sommet indice i
+
+    for (int i=0; i<m_ordre; i++)
+    {
+        c.push_back(0);
+    }
+///Composante fortement connexe c= intersection de c1 et c2
+    for (x=0; x<m_ordre; x++)
+    {
+
+        if (c1[x]==1 &&c2[x]==1)
+        {
+            c[x]=1;
+
+        }
+
+        else
+            c[x]=0;
+
+
+    }
+
+
+//    std::cout<<"Composantes fortement connexes de "<<s<<std::endl;
+//    for (int unsigned k=0; k<c.size(); k++)
+//    {
+//        std::cout<<c[k]<<" ";
+//    }
+//    std::cout<<std::endl;
+    return c;
+
+}
+
+
+
+void Graph::compo_fort_connexes()
+{
+
+    ///Fonction qui retourne un tableau dynamique de toutes les composantes fortement connexes du graphe
+    ///Paramètres
+    ///Adjacence : matrice d'adjacence noeud-noeud du graphe
+    ///ordre : nombre de sommets
+
+    ///Variables locales
+    std::vector <std::vector <int> > tabc;///Tableau dynamique des composantes fortement connexes à retourner
+    std::vector <int> temporaire;
+    int x, y; ///Numero de sommets intermédiaires comme indices des tableaux
+
+    for (int i=0; i<m_ordre; i++)
+    {
+        for (int j=0; j<m_ordre; j++)
+        {
+            temporaire.push_back(0);
+        }
+
+    }
+
+
+    ///Initialisation à false des marqueurs de sommets
+    for (std::map<int, Vertex>::iterator it = m_vertices.begin(); it!=m_vertices.end(); ++it)
+    {
+        it->second.m_marque=false;
+
+    }
+
+
+    ///Pour tous les sommets x non marques
+    ///Rechercher la composante fortement connexe de x
+    ///Marquer chaque sommet x et marquer les sommets y connectés à x et non marques
+    std::map<int,Vertex>::iterator itx;
+    std::map<int,Vertex>::iterator ity;
+
+///On parcourt une première fois tous nos sommets
+    for (x=0; x<m_ordre; x++)
+    {
+        itx= m_vertices.find(x);
+
+
+        ///On ajoute dans tab à l'indice de ce sommet ses composantes fortement connexes
+        tabc.push_back( une_compo_fortement_connexes(x));
+
+        ///On le marque
+        itx->second.m_marque=true;
+        ///On parcourt une seconde fois les sommets
+        for (y=0; y<m_ordre; y++)
+        {
+
+            ity= m_vertices.find(y);
+            ///Si x et y sont fortement connexes et que y n'est pas marque alors on marque y
+            if (tabc[x][y]==1 && ity->second.m_marque==false)
+                ity->second.m_marque=true;
+        }
+
+    }
+
+/////affichage de nos composantes fortement connexes au fur et a mesure de la construction
+//    std::cout<<"composante fortement connexes"<<std::endl;
+//    for (unsigned int i=0; i<tabc.size(); i++)
+//    {
+//        for(unsigned int j=0; j<tabc.size(); j++)
+//        {
+//            std::cout<<tabc[i][j]<<" ";
+//        }
+//        std::cout<<std::endl;
+//    }
+
+
+///Reconnaissance des composantes fortement connexes
+///Initialisation d'un booléen
+    bool different=false;
+
+    bool compo_deja_faite=false;
+    int cpt=0;
+    int cpt_2=0;
+///Ma_compo contiendra une composante fortement connexes une a une
+    std::vector <int> ma_compo;
+///Mes_compo contiendra les composante fortement connexes
+    std::vector <std::vector <int> > mes_compo;
+
+    for (unsigned int x=0; x<tabc.size(); x++)
+    {
+        if (tabc[0][x]==1)
+            cpt_2++;
+    }
+    for (unsigned int x=0; x<tabc.size(); x++)
+    {
+        if( cpt_2>1)
+        ma_compo.push_back(tabc[0][x]);
+        else
+        {
+        for (int j=0; j<m_ordre; j++)
+        {
+            ma_compo.push_back(0);
+        }
+
+        }
+
+    }
+
+    mes_compo.push_back(ma_compo);
+
+    ma_compo.clear();
+
+
+///Parcourons le tableau detecteur de forte connexite les lignes
+    for (unsigned int j=1; j<m_ordre; j++)
+    {
+
+        ///Les colonnes
+//        std::cout<<"Ma compo : ";
+        for (unsigned int i=0; i<tabc.size(); i++)
+        {
+
+///On range une ligne de ce tableau dans notre vecteur ma compo
+            ma_compo.push_back(tabc[j][i]);
+//            std::cout<<ma_compo[i]<<" ";
+
+        }
+//        std::cout<<std::endl;
+
+
+///Si on a deja range au moins une ligne dans notre tableau
+
+        ///On parcourt le tableau qui regroupe toutes les composantes à la ligne et verifie
+        ///Que la ligne que l'on veut ajouter est differente de celle qui precede
+
+
+
+///Boucle pour verifier que deux lignes sont differentes
+
+        for (unsigned int a=0; a<mes_compo.size(); a++)
+       {
+//
+//            std::cout<<"mes compos  = "<<std::endl;
+//            for (unsigned int a=0; a<mes_compo.size(); a++)
+//            {
+//                for (int e=0; e<m_ordre; e++)
+//                {
+//                    std::cout<<mes_compo[a][e]<<" ";
+//                }
+//                std::cout<<std::endl;
+//            }
+
+
+            int z=0;
+            for (z=0; z<mes_compo.size(); z++)
+            {
+
+                if(ma_compo[a]!=mes_compo[a][z])
+                {
+                    ///Si c'est bien different on rajoutera cette composante dans notre
+                    ///Vecteur de forte connexite
+
+                    cpt++;
+                }
+            }
+            if (cpt==z*m_ordre)
+            {
+                different=true;
+            }
+
+        }
+
+
+        if(different==true)
+        {
+            mes_compo.push_back(ma_compo);
+
+
+        }
+
+
+        ma_compo.clear();
+
+
+    }
+
+    ///Affichage composantes connexes
+
+if (mes_compo.size()==1 && cpt_2<2)
+{
+    std::cout<<"Pas de composante fortement connexe dans ce graph"<<std::endl;
+
+
+}
+else
+{
+    for (unsigned int i=0; i<mes_compo.size(); i++)
+    {
+        std::cout<<"La composante fortement connexe numero "<<i+1<<" est compose de : "<<std::endl;
+        for (unsigned int j=0; j<m_ordre; j++)
+        {
+            if (mes_compo[i][j]==1)
+            {
+                std::cout <<" Sommet "<<j;
+            }
+        }
+        std::cout<<std::endl;
+    }
+
+}
+
+
+
+}
+
+

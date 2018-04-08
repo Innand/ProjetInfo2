@@ -663,10 +663,10 @@
 	<string>
 	"graph.h"
 
-1522959693 source:c:\users\inna\desktop\projet_th_graphe\version10\graph.cpp
+1522960480 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\graph.cpp
 	"graph.h"
 
-1522959365 c:\users\inna\desktop\projet_th_graphe\version10\graph.h
+1522960317 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\graph.h
 	<fstream>
 	"Sommet.h"
 	<vector>
@@ -675,22 +675,22 @@
 	<memory>
 	"grman/grman.h"
 
-1522952789 c:\users\inna\desktop\projet_th_graphe\version10\sommet.h
+1522929630 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\sommet.h
 	<iostream>
 
-1522952794 c:\users\inna\desktop\projet_th_graphe\version10\grman\grman.h
+1522959463 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\grman\grman.h
 	<allegro.h>
 	<string>
 	"grman_couleurs.h"
 	"coords.h"
 	"widget.h"
 
-1522952794 c:\users\inna\desktop\projet_th_graphe\version10\grman\grman_couleurs.h
+1522830644 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\grman\grman_couleurs.h
 
-1522952794 c:\users\inna\desktop\projet_th_graphe\version10\grman\coords.h
+1522830640 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\grman\coords.h
 	<cmath>
 
-1522952794 c:\users\inna\desktop\projet_th_graphe\version10\grman\widget.h
+1522928994 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\grman\widget.h
 	"grman.h"
 	<iostream>
 	<string>
@@ -698,10 +698,10 @@
 	<algorithm>
 	<allegro.h>
 
-1522952794 source:c:\users\inna\desktop\projet_th_graphe\version10\grman\coords.cpp
+1522830638 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\grman\coords.cpp
 	"coords.h"
 
-1522952794 source:c:\users\inna\desktop\projet_th_graphe\version10\grman\grman.cpp
+1522959509 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\grman\grman.cpp
 	<cmath>
 	<unordered_map>
 	<unordered_set>
@@ -715,10 +715,315 @@
 	<loadpng.h>
 	<jpgalleg.h>
 
-1522952794 source:c:\users\inna\desktop\projet_th_graphe\version10\grman\widget.cpp
+1522927408 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\grman\widget.cpp
 	"widget.h"
 
-1522959411 source:c:\users\inna\desktop\projet_th_graphe\version10\main.cpp
+1522960408 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\chaines_ocean_savane-aretes_adj\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string>
+	"graph.h"
+
+1523026306 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\graph.cpp
+	"graph.h"
+
+1523026460 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\graph.h
+	<fstream>
+	"Sommet.h"
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522929630 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\sommet.h
+	<iostream>
+
+1522966889 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522830644 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\grman\grman_couleurs.h
+
+1522830640 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\grman\coords.h
+	<cmath>
+
+1522928994 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522830638 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\grman\coords.cpp
+	"coords.h"
+
+1523012609 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523010695 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\grman\widget.cpp
+	"widget.h"
+
+1523026529 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version11\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string>
+	"graph.h"
+
+1522830638 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\grman\coords.cpp
+	"coords.h"
+
+1522830640 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\grman\coords.h
+	<cmath>
+
+1523012609 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522966889 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522830644 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\grman\grman_couleurs.h
+
+1523067173 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523067195 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\grman\widget.cpp
+	"widget.h"
+
+1523087714 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string>
+	"graph.h"
+
+1523068860 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\graph.h
+	<fstream>
+	"Sommet.h"
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522929630 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\sommet.h
+	<iostream>
+
+1523088186 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\version12\graph.cpp
+	"graph.h"
+
+1523089015 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\grman\coords.cpp
+	"coords.h"
+
+1523089015 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\grman\coords.h
+	<cmath>
+
+1523109891 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523089015 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1523089015 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\grman\grman_couleurs.h
+
+1523089015 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523123244 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\grman\widget.cpp
+	"widget.h"
+
+1523121597 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string>
+	"graph.h"
+
+1523109965 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\graph.h
+	<fstream>
+	"Sommet.h"
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1523089015 c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\sommet.h
+	<iostream>
+
+1523123160 source:c:\users\laura\onedrive\documents\ece\ing2\semestre2\théorie des graphes\projet\github\projetinfo2\extension_poids_fleches-menu\graph.cpp
+	"graph.h"
+
+1523123841 source:c:\users\inna\desktop\projet_th_graphe\version15\grman\coords.cpp
+	"coords.h"
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15\grman\coords.h
+	<cmath>
+
+1523123841 source:c:\users\inna\desktop\projet_th_graphe\version15\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15\grman\grman_couleurs.h
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523123841 source:c:\users\inna\desktop\projet_th_graphe\version15\grman\widget.cpp
+	"widget.h"
+
+1523131796 source:c:\users\inna\desktop\projet_th_graphe\version15\graph.cpp
+	"graph.h"
+
+1523124408 c:\users\inna\desktop\projet_th_graphe\version15\graph.h
+	<fstream>
+	"Sommet.h"
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1523123835 c:\users\inna\desktop\projet_th_graphe\version15\sommet.h
+	<iostream>
+
+1523128456 source:c:\users\inna\desktop\projet_th_graphe\version15\main.cpp
+	"grman/grman.h"
+	<iostream>
+	<string>
+	"graph.h"
+
+1523123841 source:c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\grman\coords.cpp
+	"coords.h"
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\grman\coords.h
+	<cmath>
+
+1523123841 source:c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\grman\grman_couleurs.h
+
+1523123841 c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523123841 source:c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\grman\widget.cpp
+	"widget.h"
+
+1523131939 source:c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\graph.cpp
+	"graph.h"
+
+1523124408 c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\graph.h
+	<fstream>
+	"Sommet.h"
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1523123835 c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\sommet.h
+	<iostream>
+
+1523131934 source:c:\users\inna\desktop\projet_th_graphe\version15 - comfconnex\main.cpp
 	"grman/grman.h"
 	<iostream>
 	<string>

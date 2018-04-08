@@ -143,6 +143,10 @@ class Vertex
         /// un exemple de donnée associée à l'arc, on peut en ajouter d'autres...
         double m_value;
 
+
+        ///Marquage du sommet
+        bool m_marque;
+
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<VertexInterface> m_interface = nullptr;
 
@@ -235,6 +239,7 @@ class Edge
         /// Edge étant géré par Graph ce sera la méthode update de graph qui appellera
         /// le pre_update et post_update de Edge (pas directement la boucle de jeu)
         /// Voir l'implémentation Graph::update dans le .cpp
+        void set_thickness(float epais);
         void pre_update();
         void post_update();
 };
@@ -265,6 +270,20 @@ class GraphInterface
         /// Dans cette boite seront ajoutés des boutons de contrôle etc...
         grman::WidgetBox m_tool_box;
 
+        grman::WidgetButton m_button_1;
+        grman::WidgetText m_button_1_label;
+
+        grman::WidgetButton m_option_1;
+        grman::WidgetText m_option1_label;
+
+        grman::WidgetButton m_option_2;
+        grman::WidgetText m_option2_label;
+
+        grman::WidgetButton m_option_3;
+        grman::WidgetText m_option3_label;
+
+        grman::WidgetButton m_option_4;
+        grman::WidgetText m_option4_label;
 
         // A compléter éventuellement par des widgets de décoration ou
         // d'édition (boutons ajouter/enlever ...)
@@ -286,6 +305,9 @@ class Graph
 
         /// La liste des sommets
         std::map<int, Vertex> m_vertices;
+
+        ///Matrice adj
+         std::vector <std::vector <int> > m_matrice_adj;
 
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
@@ -310,9 +332,14 @@ class Graph
         /// Voir implémentation dans le .cpp
         /// Cette méthode est à enlever et remplacer par un système
         /// de chargement de fichiers par exemple.
+
+        std::string accueil(BITMAP* fond_menu);
+
         void make_example(std::string nom_fic_som, std::string nom_fic_ar);
 
-        void ajouter_sommet();
+        void set_thickness();
+
+        void ajouter_sommet(int chaine);
 
         void enregistrer_donnees_som(std::string nom_fic);
 
@@ -321,26 +348,31 @@ class Graph
         void enregistrer_donnees_ar(std::string nom_fic);
 
         void recup_donnees_ar(std::string nom_fic);
+
         ///afficher aretes
-        void  afficher_aretes();
+        void afficher_aretes();
 
         ///Ajouter arete
         void ajouter_arete(bool *finn, bool *finn2, bool *gauche, int *cptt, int *s1, int *s2);
-
-        ///Supprimer arète
-        void supp_arete(bool *fin_inna1, int *cpt_inna, int *s);
-        void test_remove_edge(int eidx);
-
 
         ///Supprimer sommet
         void supprimer_sommet(bool *fin1, int *cptt);
 
         void ar_incidentes(bool *click, int *v, int *s, int *s2);
 
+        void supp_arete(bool *fin_inna1, int *cpt_inna, int *s);
 
+        void evolution_pop(bool *ev);
+
+        void test_remove_edge(int eidx);
+        ///Implementation Matrice adj
+        void  matrice_adj();
+        ///Composantes fortement connexes
+        std::vector <int> une_compo_fortement_connexes(int s);
+        void compo_fort_connexes();
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update();
+        void update(int *chaine);
 };
 
 
